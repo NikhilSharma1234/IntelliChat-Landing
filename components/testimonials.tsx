@@ -13,7 +13,7 @@ export default function Testimonials() {
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
             <h2 className="h2 mb-4">Don't take our word for it</h2>
-            <p className="text-xl text-gray-400">Vitae aliquet nec ullamcorper sit amet risus nullam eget felis semper quis lectus nulla at volutpat diam ut venenatis tellus—in ornare.</p>
+            <p className="text-xl text-gray-400">Here are some real cusotmer reviews that highlight what it's like to use IntelliChat in their everyday web browsing</p>
           </div>
 
           {/* Testimonials */}
@@ -31,7 +31,7 @@ export default function Testimonials() {
               </div>
               <blockquote className="text-lg text-gray-400 grow">— IntelliChat lets me quickly get the insights I care about so that I can focus on my productive work. I've had IntelliChat for about 24 hours now and I honestly don't know how I functioned without it before.</blockquote>
               <div className="text-gray-700 font-medium mt-6 pt-5 border-t border-gray-700">
-                <cite className="text-gray-200 not-italic">Anastasia Dan</cite> - <a className="text-purple-600 hover:text-gray-200 transition duration-150 ease-in-out" href="#0">UX Board</a>
+                <cite className="text-gray-200 not-italic">Austin Sloane</cite> - <a className="text-purple-600 hover:text-gray-200 transition duration-150 ease-in-out" href="https://www.linkedin.com/in/sloaneat">TechWise</a>
               </div>
             </div>
 
@@ -45,9 +45,9 @@ export default function Testimonials() {
                   </svg>
                 </div>
               </div>
-              <blockquote className="text-lg text-gray-400 grow">— IntelliChat lets me quickly get the insights I care about so that I can focus on my productive work. I've had IntelliChat for about 24 hours now and I honestly don't know how I functioned without it before.</blockquote>
+              <blockquote className="text-lg text-gray-400 grow">— IntelliChat lets me be soooo much more productive. Instead of opening another tab and searching google for something, I can learn about topics on the page, get this --- right on the page</blockquote>
               <div className="text-gray-700 font-medium mt-6 pt-5 border-t border-gray-700">
-                <cite className="text-gray-200 not-italic">Anastasia Dan</cite> - <a className="text-purple-600 hover:text-gray-200 transition duration-150 ease-in-out" href="#0">UX Board</a>
+                <cite className="text-gray-200 not-italic">Felipe Rivera</cite> - <a className="text-purple-600 hover:text-gray-200 transition duration-150 ease-in-out" href="https://www.linkedin.com/in/feliperiverach">The Rivera</a>
               </div>
             </div>
 
@@ -61,9 +61,9 @@ export default function Testimonials() {
                   </svg>
                 </div>
               </div>
-              <blockquote className="text-lg text-gray-400 grow">— IntelliChat lets me quickly get the insights I care about so that I can focus on my productive work. I've had IntelliChat for about 24 hours now and I honestly don't know how I functioned without it before.</blockquote>
+              <blockquote className="text-lg text-gray-400 grow">— This is a great product if you're looking to level up your browsing. The team of engineers keep the extension very updated with new features every few weeks. I love IntelliChat!</blockquote>
               <div className="text-gray-700 font-medium mt-6 pt-5 border-t border-gray-700">
-                <cite className="text-gray-200 not-italic">Anastasia Dan</cite> - <a className="text-purple-600 hover:text-gray-200 transition duration-150 ease-in-out" href="#0">UX Board</a>
+                <cite className="text-gray-200 not-italic">Nicholas Groesch</cite> - <a className="text-purple-600 hover:text-gray-200 transition duration-150 ease-in-out" href="https://www.linkedin.com/in/nick-groesch-b59806185?challengeId=AQG9cB8brgepdAAAAYnNb4OzajxxkPaxUjZOMJi3tyALvciKzROYuijIcqEi51dWxi4YaPJYKO2z7SyNSo6QSdPqcFx7dkQLAg&submissionId=59e67ec0-f2f2-7817-02c0-7c9d0fe69078&challengeSource=AgEzDpYzc6QbKAAAAYnNb7p51CBJOPY99_wiJMM6I_7IqdBCU2lTI4rtHdQFoWA&challegeType=AgGQtMMJUxbODwAAAYnNb7p8tGBxoLR1MaSQfQPwqjrvxRm_B9o0fyY&memberId=AgHR_73JJ__VQQAAAYnNb7p_Gbp5L1zrecbClkcgCf-3mWg&recognizeDevice=AgHExk1Jk-NNJAAAAYnNb7qCobvTCJJtnX-d8cG0EOAfBIjnNk2I">TalentSprint</a>
               </div>
             </div>
 
