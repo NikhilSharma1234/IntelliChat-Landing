@@ -10,11 +10,13 @@ import Newsletter from '../partials/Newsletter';
 import Banner from '../partials/Banner';
 import Footer from '../partials/Footer';
 
-function Home() {
+function Home({
+  setIsSignedIn,
+  isSignedIn,
+}) {
   return (
     <div className="flex flex-col min-h-screen overflow-hidden">
       {/*  Site header */}
-      <Header />
 
       {/*  Page content */}
       <main className="grow">

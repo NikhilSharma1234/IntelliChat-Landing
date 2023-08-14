@@ -1,13 +1,18 @@
 /* global chrome*/
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {Auth} from 'aws-amplify';
 
 import Header from '../partials/Header';
 import { Dialog, DialogContent, DialogTitle, Snackbar } from '@mui/material';
-import { UserContext } from '../AppContext';
 
-function SignUp() {
+function SignUp(
+  {
+    setIsSignedIn,
+    isSignedIn,
+  }
+) {
+  if (isSignedIn) return navigate("/")
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [email, setEmail] = React.useState('');
@@ -15,7 +20,7 @@ function SignUp() {
   const [verificationCode, setVerificationCode] = React.useState(undefined);
   const [snackBarStatus, setSnackBarStatus] = React.useState(false);
   const [snackBarText, setSnackBarText] = React.useState('');
-  const [userVerified, setUserVerified, userRegistered, setUserRegistered, userSignedIn, setUserSignedIn] = React.useContext(UserContext);
+  const navigate = useNavigate();
   const validateEmail = (email) => {
     return String(email)
       .toLowerCase()
@@ -25,7 +30,6 @@ function SignUp() {
   };
   function register(event) {
     event.preventDefault();
-    window.console.log('here');
     if (!validateEmail(email)) return false;
     
     Auth.signUp(
@@ -38,7 +42,6 @@ function SignUp() {
           password
         }
       ).then((result) => {
-      setUserRegistered(true);
       setSnackBarText('User Created, please verify your email');
       setSnackBarStatus(true);
       setUserSuccess(true);
@@ -50,7 +53,6 @@ function SignUp() {
   function verifyCode() {
     if (!verificationCode) return false;
     Auth.confirmSignUp(username, verificationCode).then((result) => {
-      setUserVerified(true)
       setSnackBarText('User verified! Happy Browsing!');
       setSnackBarStatus(true);
       setUserSuccess(false);
@@ -62,22 +64,18 @@ function SignUp() {
   }
   function signInUser() {
     Auth.signIn(username, password).then((result) => {
-      window.console.log('sign in result', result);
-      window.localStorage.setItem=('intellichat', result.signInUserSession.idToken.jwtToken);
       chrome.runtime.sendMessage(process.env.VITE_CHROME_EXTENSION_ID, {jwt: result.signInUserSession.idToken.jwtToken}, response => {
         if (response) {
           return response;
         }
       });
-      setUserSignedIn(true);
+      setIsSignedIn(true);
+      navigate("/");
     }).catch((err) => {
-      window.console.log('signin error', err);
     })
   }
   return (
     <div>
-    {/* Header */}
-    <Header />
 
     {/* Basic User Notifications*/}
     <Snackbar
@@ -155,7 +153,7 @@ function SignUp() {
               </div>
             </form>
             <div className="text-gray-400 text-center mt-6">
-              Already using IntelliChat? <Link href="/signin" className="text-purple-600 hover:text-gray-200 transition duration-150 ease-in-out">Sign in</Link>
+              Already using IntelliChat? <a href="/signin" className="text-purple-600 hover:text-gray-200 transition duration-150 ease-in-out">Sign in</a>
             </div>
           </div>
 

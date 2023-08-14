@@ -1,12 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import Dropdown from '../utils/Dropdown';
 import Logo from '../images/white_transparent.png'
+import {Auth} from 'aws-amplify';
+import { useNavigate } from 'react-router-dom';
 
-function Header() {
+function Header({
+    setIsSignedIn,
+    isSignedIn,
+}) {
 
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
-
+  const navigate = useNavigate();
   const trigger = useRef(null);
   const mobileNav = useRef(null);
 
@@ -31,6 +34,15 @@ function Header() {
     return () => document.removeEventListener('keydown', keyHandler);
   });
 
+  useEffect(() => {
+  }, [isSignedIn])
+
+  function signOut() {
+    Auth.signOut();
+    setIsSignedIn(false);
+    navigate("/");
+  }
+
   return (
     <header className="absolute w-full z-30">
     <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -47,19 +59,32 @@ function Header() {
         <nav className="hidden md:flex md:grow">
           {/* Desktop sign in links */}
           <ul className="flex grow justify-end flex-wrap items-center">
+            {isSignedIn
+            ? 
             <li>
-              <a
-                href="/signin"
+              <button onClick={() => signOut()}
                 className="font-medium text-purple-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"
               >
-                Sign in
-              </a>
+                Sign Out
+              </button>
             </li>
-            <li>
-              <a href="/signup" className="btn-sm text-white bg-purple-600 hover:bg-purple-700 ml-3">
-                Sign up
-              </a>
-            </li>
+            :
+            <>
+              <li>
+                <a
+                  href="/signin"
+                  className="font-medium text-purple-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"
+                >
+                  Sign in
+                </a>
+              </li>
+              <li>
+                <a href="/signup" className="btn-sm text-white bg-purple-600 hover:bg-purple-700 ml-3">
+                  Sign up
+                </a>
+              </li>
+            </>
+            }
           </ul>
         </nav>
 

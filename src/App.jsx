@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import {
   Routes,
   Route,
@@ -22,27 +22,36 @@ import Home from './pages/Home';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import ResetPassword from './pages/ResetPassword';
-import { UserProvider } from './AppContext';
+import Header from './partials/Header';
 
 function App() {
   const [render, setRender] = React.useState(false)
+  const [isSignedIn, setIsSignedIn] = React.useState(false);
   const location = useLocation();
 
   useEffect(() => {
     async function checkAuth() {
-    try {
-      if (Auth.currentAuthenticatedUser()) {
-        return true
+      try {
+        const auth = await Auth.currentAuthenticatedUser();
+        if (auth) {
+          setIsSignedIn(true)
+        }
+        else {
+          setIsSignedIn(false)
+        }
       }
-      return false
+      catch(err) {
+      }
     }
-    catch(err) {
-      console.log(err)
+    checkAuth()
+  }, [])
+
+  useEffect(() => {
+    if (isSignedIn) {
+      setRender(true);
     }
-    }
-    if (checkAuth()) setRender(true)
-    setRender(true);
-  })
+    setRender(true)
+  }, [isSignedIn])
 
   useEffect(() => {
     AOS.init({
@@ -62,14 +71,31 @@ function App() {
   if (render) {
   return (
     <>
-    <UserProvider>
+      <Header
+        setIsSignedIn={setIsSignedIn}
+        isSignedIn={isSignedIn}
+      />
       <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} />
+      <Route exact path="/" element={
+          <Home
+            setIsSignedIn={setIsSignedIn}
+            isSignedIn={isSignedIn}
+          />
+        } />
+        <Route path="/signin" element={
+          <SignIn 
+            setIsSignedIn={setIsSignedIn}
+            isSignedIn={isSignedIn}
+          />
+        } />
+        <Route path="/signup" element={
+          <SignUp
+            setIsSignedIn={setIsSignedIn}
+            isSignedIn={isSignedIn}
+          />
+        } />
         <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
-      </UserProvider>
     </>
   );
   }

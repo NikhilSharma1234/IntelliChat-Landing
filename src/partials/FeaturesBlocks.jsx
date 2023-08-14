@@ -25,7 +25,7 @@ function FeaturesBlocks() {
                 <path className="stroke-current text-purple-300" d="M43 42h-9M43 37h-9" strokeLinecap="square" strokeWidth="2" />
               </svg>
               <h4 className="h4 mb-2">AI Infused</h4>
-              <p className="text-lg text-gray-400 text-center">Communicate with a large AI language model within seconds without leaving your webpage</p>
+              <p className="text-lg text-gray-400 text-center">Communicate with a large AI language model within seconds - without leaving your webpage</p>
             </div>
 
             {/* 2nd item */}

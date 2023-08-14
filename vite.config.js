@@ -5,7 +5,6 @@ import react from '@vitejs/plugin-react'
 // https://vitejs.dev/config/
 export default (({mode}) => {
   const env = loadEnv(mode, process.cwd(), 'VITE_');
-  console.log(env)
   return defineConfig({
   define: {
     'process.env.VITE_USER_POOL_ID': JSON.stringify(env.VITE_USER_POOL_ID),
