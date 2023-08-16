@@ -21,6 +21,7 @@ import {Auth} from 'aws-amplify';
 import Home from './pages/Home';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
+import Payments from './pages/Payments'
 import ResetPassword from './pages/ResetPassword';
 import Header from './partials/Header';
 
@@ -94,6 +95,12 @@ function App() {
             isSignedIn={isSignedIn}
           />
         } />
+        <Route path="/payments" element={
+            <Payments
+              setIsSignedIn={setIsSignedIn}
+              isSignedIn={isSignedIn}
+            />
+          } />
         <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
     </>
