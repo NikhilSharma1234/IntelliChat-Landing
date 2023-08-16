@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
 import {
   Routes,
   Route,
@@ -23,6 +23,7 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import ResetPassword from './pages/ResetPassword';
 import Header from './partials/Header';
+import Footer from './partials/Footer';
 
 function App() {
   const [render, setRender] = React.useState(false)
@@ -96,6 +97,8 @@ function App() {
         } />
         <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
+      {/*  Site footer */}
+      <Footer />
     </>
   );
   }

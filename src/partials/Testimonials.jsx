@@ -11,7 +11,7 @@ function Testimonials() {
         <div className="py-12 md:py-20 border-t border-gray-800">
 
           {/* Section header */}
-          <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
+          <div id="testimonials" className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
             <h2 className="h2 mb-4">Don't take our word for it</h2>
             <p className="text-xl text-gray-400">Here are some real cusotmer reviews that highlight what it's like to use IntelliChat in their everyday web browsing</p>
           </div>

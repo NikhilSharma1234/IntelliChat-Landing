@@ -12,7 +12,6 @@ function SignUp(
     isSignedIn,
   }
 ) {
-  if (isSignedIn) return navigate("/")
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [email, setEmail] = React.useState('');
@@ -21,6 +20,15 @@ function SignUp(
   const [snackBarStatus, setSnackBarStatus] = React.useState(false);
   const [snackBarText, setSnackBarText] = React.useState('');
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (isSignedIn) {
+      navigate("/");
+      return
+    }
+  }, [isSignedIn]);
+
+
   const validateEmail = (email) => {
     return String(email)
       .toLowerCase()
@@ -70,7 +78,6 @@ function SignUp(
         }
       });
       setIsSignedIn(true);
-      navigate("/");
     }).catch((err) => {
     })
   }

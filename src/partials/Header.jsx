@@ -38,7 +38,13 @@ function Header({
   }, [isSignedIn])
 
   function signOut() {
-    Auth.signOut();
+    Auth.signOut().then(() =>{
+      chrome.runtime.sendMessage(process.env.VITE_CHROME_EXTENSION_ID, {jwt: ''}, response => {
+        if (response) {
+          return response;
+        }
+      });
+    });
     setIsSignedIn(false);
     navigate("/");
   }
