@@ -2,8 +2,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import Modal from '../utils/Modal';
 
 import HeroImage from '../images/hero-image-01.jpg';
+import { Link } from 'react-router-dom';
 
-function HeroHome() {
+function HeroHome({
+  isSignedIn,
+}) {
   const [videoModalOpen, setVideoModalOpen] = useState(false);
   const video = useRef(null);
 
@@ -45,9 +48,11 @@ function HeroHome() {
             <h1 className="h1 mb-4" data-aos="fade-up">IntelliChat</h1>
             <p className="text-xl text-gray-400 mb-8" data-aos="fade-up" data-aos-delay="200">A simple web based extension to transform the way you experience the web.</p>
             <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center">
-              <div data-aos="fade-up" data-aos-delay="400">
-                <a className="btn text-white bg-purple-600 hover:bg-purple-700 w-full mb-4 sm:w-auto sm:mb-0" href="#0">Start free trial</a>
-              </div>
+              {isSignedIn && (
+                <div data-aos="fade-up" data-aos-delay="400">
+                  <Link to="/payments" className="btn text-white bg-[#277EFF] hover:opacity-90 w-full mb-4 sm:w-auto sm:mb-0" href="#0">View Plans</Link>
+                </div>
+              )}
               <div data-aos="fade-up" data-aos-delay="600">
                 <a className="btn text-white bg-gray-700 hover:bg-gray-800 w-full sm:w-auto sm:ml-4" href="#details">Learn more</a>
               </div>
@@ -81,7 +86,7 @@ function HeroHome() {
                   </defs>
                   <circle fill="url(#a)" cx="44" cy="44" r="44" />
                   <path
-                    className="fill-current text-purple-600"
+                    className="fill-current text-[#277EFF]"
                     d="M52 44a.999.999 0 00-.427-.82l-10-7A1 1 0 0040 37V51a.999.999 0 001.573.82l10-7A.995.995 0 0052 44V44c0 .001 0 .001 0 0z"
                   />
                 </svg>

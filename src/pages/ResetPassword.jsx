@@ -40,12 +40,12 @@ function ResetPassword() {
                   </div>
                   <div className="flex flex-wrap -mx-3 mt-6">
                     <div className="w-full px-3">
-                      <button className="btn text-white bg-purple-600 hover:bg-purple-700 w-full">Reset Password</button>
+                      <button className="btn text-white bg-[#277EFF] hover:opacity-90 w-full">Reset Password</button>
                     </div>
                   </div>
                 </form>
                 <div className="text-gray-400 text-center mt-6">
-                  <Link to="/signin" className="text-purple-600 hover:text-gray-200 transition duration-150 ease-in-out">Cancel</Link>
+                  <Link to="/signin" className="text-[#277EFF] hover:text-gray-200 transition duration-150 ease-in-out">Cancel</Link>
                 </div>
               </div>
 

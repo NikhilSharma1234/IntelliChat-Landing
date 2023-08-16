@@ -101,7 +101,7 @@ function SignUp(
         </div>
         <div className="flex flex-wrap -mx-3 mt-6">
           <div className="w-full px-3">
-            <button onClick={verifyCode} id="submitVerify" type="submitVerify" className="btn text-white bg-purple-600 hover:bg-purple-700 w-full">Verify</button>
+            <button onClick={verifyCode} id="submitVerify" type="submitVerify" className="btn text-white bg-[#277EFF] hover:opacity-90 w-full">Verify</button>
           </div>
         </div>
       </DialogContent>
@@ -148,12 +148,12 @@ function SignUp(
               </div>
               <div className="flex flex-wrap -mx-3 mt-6">
                 <div className="w-full px-3">
-                  <button id="submit" type="submit" className="btn text-white bg-purple-600 hover:bg-purple-700 w-full">Sign up</button>
+                  <button id="submit" type="submit" className="btn text-white bg-[#277EFF] hover:opacity-90 w-full">Sign up</button>
                 </div>
               </div>
             </form>
             <div className="text-gray-400 text-center mt-6">
-              Already using IntelliChat? <a href="/signin" className="text-purple-600 hover:text-gray-200 transition duration-150 ease-in-out">Sign in</a>
+              Already using IntelliChat? <a href="/signin" className="text-[#277EFF] hover:text-gray-200 transition duration-150 ease-in-out">Sign in</a>
             </div>
           </div>
 
