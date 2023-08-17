@@ -99,14 +99,23 @@ function App() {
             isSignedIn={isSignedIn}
           />
         } />
-        {username.length > 0 && (<Route path="/payments" element={
+        {username.length > 0 ? (<Route path="/payments" element={
             <Payments
               setIsSignedIn={setIsSignedIn}
               isSignedIn={isSignedIn}
               username={username}
             />
           } />
-        )}
+        ) : (
+          <Route path="/payments" element={
+            <Payments
+              setIsSignedIn={setIsSignedIn}
+              isSignedIn={false}
+              username={username}
+            />
+          } />
+        )
+        }
         <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
     </>

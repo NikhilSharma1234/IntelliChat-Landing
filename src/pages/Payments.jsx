@@ -46,9 +46,9 @@ function Payments({
             {isSignedIn ? (
                 <h1 className="h1">Welcome to the {userPlan === 'free' ? 'Free Plan' : 'Premium Plan'}</h1>
             ) : (
-                <div className="justify-center">
-                    <h1 className="h1">Sign in to view <p></p>payment plans</h1>
-                    <Link to="/" className="border p-8 rounded-lg bg-[#277EFF] text-white flex-1">
+                <div className="">
+                    <h1 className="h1 p-20">Sign in to view payment plans</h1>
+                    <Link to="/" className="p-8 rounded-lg bg-[#277EFF] text-white font-bold flex-1">
                         Home 🏠
                     </Link>
                 </div>
