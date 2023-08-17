@@ -13,7 +13,7 @@ function Testimonials() {
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
             <h2 className="h2 mb-4">Don't take our word for it</h2>
-            <p className="text-xl text-gray-400">Here are some real cusotmer reviews that highlight what it's like to use IntelliChat in their everyday web browsing</p>
+            <p className="text-xl text-gray-400">Here are some real customer reviews that highlight what it's like to use IntelliChat in their everyday web browsing</p>
           </div>
 
           {/* Testimonials */}
