@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {Auth} from 'aws-amplify';
+import axios from "axios";
 
 import Header from '../partials/Header';
 import { Dialog, DialogContent, DialogTitle, Snackbar } from '@mui/material';
@@ -12,7 +13,12 @@ function SignUp(
     isSignedIn,
   }
 ) {
-  if (isSignedIn) return navigate("/")
+  const navigate = useNavigate();
+
+  if (isSignedIn) {
+    return navigate("/");
+  }
+
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [email, setEmail] = React.useState('');
@@ -20,7 +26,7 @@ function SignUp(
   const [verificationCode, setVerificationCode] = React.useState(undefined);
   const [snackBarStatus, setSnackBarStatus] = React.useState(false);
   const [snackBarText, setSnackBarText] = React.useState('');
-  const navigate = useNavigate();
+
   const validateEmail = (email) => {
     return String(email)
       .toLowerCase()
@@ -50,10 +56,14 @@ function SignUp(
       setSnackBarStatus(true);
      })
   }
-  function verifyCode() {
+
+  async function verifyCode() {
     if (!verificationCode) return false;
-    Auth.confirmSignUp(username, verificationCode).then((result) => {
+    await Auth.confirmSignUp(username, verificationCode).then(async (result) => {
       setSnackBarText('User verified! Happy Browsing!');
+      const params = new URLSearchParams();
+      params.append('username', username);
+      const resp = await axios.post("http://localhost:4242/create", params);
       setSnackBarStatus(true);
       setUserSuccess(false);
       signInUser();
@@ -69,6 +79,7 @@ function SignUp(
           return response;
         }
       });
+      
       setIsSignedIn(true);
       navigate("/");
     }).catch((err) => {
