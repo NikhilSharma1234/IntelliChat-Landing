@@ -3,6 +3,7 @@ const stripe = require('stripe')(process.env.VITE_STRIPE_KEY);
 const bodyParser = require('body-parser');
 const express = require('express');
 const cors = require('cors');
+const morgan = require('morgan');
 
 const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
 const { PutCommand, DynamoDBDocumentClient, UpdateCommand, GetCommand } = require("@aws-sdk/lib-dynamodb");
@@ -11,25 +12,22 @@ const client = new DynamoDBClient({region: 'us-east-1'});
 const docClient = DynamoDBDocumentClient.from(client);
 
 const app = express();
+
+app.use(morgan('dev'));
 app.use(express.static('public'));
+app.use(cors());
+
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-app.use(cors({
-  origin: 'http://localhost:5173', // Allow requests from frontend
-  methods: 'GET,POST',
-}));
-
-const YOUR_DOMAIN = 'http://localhost:5173/payments'; // frontend here
+const DOMAIN = 'http://localhost:5173/payments'; // frontend here
 
 async function updateUserSubscription(username, subscriptionId) {
   const command = new UpdateCommand({
     TableName: 'Customers',
     Key: {
-      "username": {
-        S: username
-      } 
+      "username": username
     },
     UpdateExpression: 'SET subscriptionId = :subscriptionId',
     ExpressionAttributeValues: {
@@ -91,11 +89,6 @@ app.post('/create', async (req, res) => {
 app.post('/checkout', async (req, res) => {
   // const { username } = req.body;
   // console.log(username);
-  try {
-    console.log(req.body);
-  } catch (err) {
-    console.log(err);
-  }
 
   // const user = await getUserByUsername(username);
 
@@ -111,12 +104,11 @@ app.post('/checkout', async (req, res) => {
       },
     ],
     mode: 'subscription',
-    success_url: `${YOUR_DOMAIN}?success=true`,
-    cancel_url: `${YOUR_DOMAIN}?canceled=true`,
+    success_url: `${DOMAIN}?success=true`,
+    cancel_url: `${DOMAIN}?canceled=true`,
   });
 
-  //await updateUserSubscription(username, session.subscription);
-
+  // await updateUserSubscription(username, session.subscription);
   res.redirect(303, session.url);
 });
 
@@ -143,4 +135,34 @@ app.post('/cancel', async (req, res) => {
   }
 });
 
+app.post('/plan', async (req, res) => {
+  const { username } = req.body;
+
+  try {
+    const user = await getUserByUsername(username);
+
+    if (!user || !user.subscriptionId) {
+      return res.status(404).json({ plan: 'free' });
+    }
+
+    const command = new GetCommand({
+      TableName: 'Customers',
+      Key: {
+        "username": username
+      }
+    });
+  
+    const resp = await docClient.send(command);
+  
+    if (!resp.Item) {
+      return null
+    } else if (resp.Item.subscriptionId != null) {
+      res.status(200).json({ plan: 'premium' });
+    } else {
+      res.status(200).json({ plan: 'free' });
+    }
+  } catch {
+    res.status(500).json({ plan: 'free' });
+  }
+});
 app.listen(4242, () => console.log('Running on port 4242'));
