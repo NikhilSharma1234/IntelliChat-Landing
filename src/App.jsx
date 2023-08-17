@@ -24,6 +24,7 @@ import SignUp from './pages/SignUp';
 import Payments from './pages/Payments'
 import ResetPassword from './pages/ResetPassword';
 import Header from './partials/Header';
+import { UserProvider } from './UserContext';
 
 function App() {
   const [render, setRender] = React.useState(false)
@@ -73,6 +74,7 @@ function App() {
 
   if (render) {
   return (
+    <UserProvider>
     <>
       <Header
         setIsSignedIn={setIsSignedIn}
@@ -108,6 +110,7 @@ function App() {
         <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
     </>
+    </UserProvider>
   );
   }
 }
