@@ -18,7 +18,6 @@ function Footer() {
                   <img src={Logo} width={144} alt="IntelliChat Logo"/>
                 </a>
               </div>
-              <div className="text-gray-400">Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.</div>
             </div>
 
             {/* 2nd, 3rd and 4th blocks */}
@@ -29,13 +28,13 @@ function Footer() {
                 <h6 className="text-gray-200 font-medium mb-1">Products</h6>
                 <ul>
                   <li className="mb-1">
-                    <a href="/" className="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out">Web Studio</a>
+                    <a href="/" className="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out">Buy Us A Coffee</a>
                   </li>
                   <li className="mb-1">
-                    <a href="/" className="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out">DynamicBox Flex</a>
+                    <a href="/" className="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out">Premium Plan</a>
                   </li>
                   <li className="mb-1">
-                    <a href="/" className="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out">Programming Forms</a>
+                    <a href="/" className="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out">Discord</a>
                   </li>
                 </ul>
               </div>
@@ -45,53 +44,27 @@ function Footer() {
                 <h6 className="text-gray-200 font-medium mb-1">Resources</h6>
                 <ul>
                   <li className="mb-1">
-                    <a href="/" className="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out">Nostrud exercitation</a>
+                    <a href="/" className="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out">Documentation (Shortcuts)</a>
                   </li>
                   <li className="mb-1">
-                    <a href="/" className="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out">Visual mockups</a>
+                    <a href="/" className="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out">Blog</a>
                   </li>
                   <li className="mb-1">
-                    <a href="/" className="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out">Nostrud exercitation</a>
-                  </li>
-                  <li className="mb-1">
-                    <a href="/" className="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out">Visual mockups</a>
-                  </li>
-                  <li className="mb-1">
-                    <a href="/" className="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out">Nostrud exercitation</a>
+                    <a href="/" className="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out">FAQ</a>
                   </li>
                 </ul>
               </div>
-
-              {/* 4th block */}
-              <div className="text-sm">
-                <h6 className="text-gray-200 font-medium mb-1">Company</h6>
-                <ul>
-                  <li className="mb-1">
-                    <a href="/" className="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out">Consectetur adipiscing</a>
-                  </li>
-                  <li className="mb-1">
-                    <a href="/" className="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out">Labore et dolore</a>
-                  </li>
-                  <li className="mb-1">
-                    <a href="/" className="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out">Consectetur adipiscing</a>
-                  </li>
-                  <li className="mb-1">
-                    <a href="/" className="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out">Labore et dolore</a>
-                  </li>
-                  <li className="mb-1">
-                    <a href="/" className="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out">Consectetur adipiscing</a>
-                  </li>
-                </ul>
-              </div>
-
             </div>
 
           </div>
 
           {/* Bottom area */}
-          <div className="md:flex md:items-center md:justify-between">
+
+          <div className="md:flex md:items-center md:justify-center">
+          <div className="text-gray-400 items-center">&copy; IntelliChat </div>
 
             {/* Social as */}
+            
             <ul className="flex mb-4 md:order-1 md:ml-4 md:mb-0">
               <li>
                 <a href="/" className="flex justify-center items-center text-[#277EFF] bg-gray-800 hover:text-gray-100 hover:bg-[#277EFF] rounded-full transition duration-150 ease-in-out" aria-label="Twitter">
