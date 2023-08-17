@@ -28,6 +28,7 @@ import Header from './partials/Header';
 function App() {
   const [render, setRender] = React.useState(false)
   const [isSignedIn, setIsSignedIn] = React.useState(false);
+  const [username, setUsername] = React.useState('');
   const location = useLocation();
 
   useEffect(() => {
@@ -35,10 +36,11 @@ function App() {
       try {
         const auth = await Auth.currentAuthenticatedUser();
         if (auth) {
-          setIsSignedIn(true)
+          setIsSignedIn(true);
+          setUsername(auth.username);
         }
         else {
-          setIsSignedIn(false)
+          setIsSignedIn(false);
         }
       }
       catch(err) {
@@ -95,12 +97,14 @@ function App() {
             isSignedIn={isSignedIn}
           />
         } />
-        <Route path="/payments" element={
+        {username.length > 0 && (<Route path="/payments" element={
             <Payments
               setIsSignedIn={setIsSignedIn}
               isSignedIn={isSignedIn}
+              username={username}
             />
           } />
+        )}
         <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
     </>
