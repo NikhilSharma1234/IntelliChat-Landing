@@ -8,7 +8,10 @@ export default (({mode}) => {
   return defineConfig({
   server: {
     proxy: {
-      '/checkout': 'http://localhost:4242'
+      '/checkout': 'http://localhost:4242',
+      '/cancel': 'http://localhost:4242',
+      '/create': 'http://localhost:4242',
+      '/plan': 'http://localhost:4242',
     }
   },
   define: {
