@@ -19,21 +19,16 @@ function Payments({
     setCancelSub(!cancelSub);
   };
 
-  const handleSubmit = async (route) => {
+  const handleSubmit = async (route, opt=undefined) => {
+    opt.preventDefault();
     const params = new URLSearchParams();
     params.append('username', username);
-    const resp = await axios.post(`http://localhost:4242${route}`, params);
+    const resp_route = await axios.post(`http://localhost:4242${route}`, params);
+    const resp_plan = await axios.post(`http://localhost:4242/plan`, params);
     
-    await updatePlan();
-    return resp;
-  };
-
-  const updatePlan = async () => {
-    const params = new URLSearchParams();
-    params.append('username', username);
-    const resp = await axios.post(`http://localhost:4242/plan`, params);
-    console.log(resp);
-    setUserPlan(resp);
+    setUserPlan(resp_plan); // wrong atm, but should be resp_plan.data.subscriptionId
+    
+    return resp_route;
   };
 
 
@@ -68,7 +63,7 @@ function Payments({
                                 <div>• No customer support. 😔</div>
                                 <div>• Throttled heavily. 😭</div>
                             </div>
-                            <form onSubmit={() => handleSubmit('/checkout')}>
+                            <form onSubmit={(e) => handleSubmit('/checkout', e)}>
                                 <button type="submit">
                                     <br />
                                     <br />
@@ -85,7 +80,7 @@ function Payments({
                                 <div>• Priority customer support. 🗿</div>
                                 <div>• No throttling or downtime! 🚀</div>
                             </div>
-                            <form onSubmit={() => handleSubmit('/checkout')}>
+                            <form onSubmit={(e) => handleSubmit('/checkout', e)}>
                                 <button type="submit">
                                         <br />
                                         <span className="p-2 bg-gray-200 text-[#277EFF] rounded-lg font-bold">Join for $5/month</span>
