@@ -11,7 +11,7 @@ function FeaturesZigzag() {
         <div className="py-12 md:py-20 border-t border-gray-800">
 
           {/* Section header */}
-          <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
+          <div id="info" className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
             <div className="inline-flex text-sm font-semibold py-1 px-3 m-2 text-green-600 bg-green-200 rounded-full mb-4">Learn like never before</div>
             <h1 className="h2 mb-4">One product, unlimited knowledge</h1>
             <p className="text-xl text-gray-400">As a committment to our customers, IntelliChat updates the AI model to keep up and exceed what the industry has to offer</p>

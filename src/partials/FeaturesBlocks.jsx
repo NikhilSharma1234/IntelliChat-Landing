@@ -8,7 +8,7 @@ function FeaturesBlocks() {
 
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
-          <a id="details">
+          <a id="features">
             <h2 className="h2 mb-4">The majority of our customers are unhappy with normal web browsing.</h2>
            </a> 
             <p className="text-xl text-gray-400">IntelliChat enhances that experince by using A.I.</p>

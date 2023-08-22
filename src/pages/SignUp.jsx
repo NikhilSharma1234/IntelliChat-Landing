@@ -1,6 +1,6 @@
 /* global chrome*/
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import {Auth} from 'aws-amplify';
 import axios from "axios";
 
@@ -13,12 +13,6 @@ function SignUp(
     isSignedIn,
   }
 ) {
-  const navigate = useNavigate();
-
-  if (isSignedIn) {
-    return navigate("/");
-  }
-
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [email, setEmail] = React.useState('');
@@ -26,6 +20,41 @@ function SignUp(
   const [verificationCode, setVerificationCode] = React.useState(undefined);
   const [snackBarStatus, setSnackBarStatus] = React.useState(false);
   const [snackBarText, setSnackBarText] = React.useState('');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const auth = searchParams.get('auth');
+
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    async function sendMessageToExtension() {
+      await Auth.currentAuthenticatedUser().then((result) => {
+        setSnackBarText('User Signed In, redirecting...');
+        setSnackBarStatus(true);
+        setTimeout(() => {
+          chrome.runtime.sendMessage(process.env.VITE_CHROME_EXTENSION_ID, {jwt: result.signInUserSession.idToken.jwtToken}, response => {
+            console.log(response)
+            if (response) {
+              
+            }
+          });
+          setIsSignedIn(true)
+          navigate("/")
+        }, 2000);
+      }).catch((err) => {
+        setSnackBarText(`Could not authenticate: ${err}`);
+        setSnackBarStatus(true);
+      })
+    }
+    console.log(isSignedIn, auth)
+    if (isSignedIn && auth) {
+      sendMessageToExtension();
+    }
+    else if (isSignedIn) {
+      //navigate("/");
+      return
+    }
+  }, [auth]);
+
 
   const validateEmail = (email) => {
     return String(email)
@@ -81,7 +110,6 @@ function SignUp(
       });
       
       setIsSignedIn(true);
-      navigate("/");
     }).catch((err) => {
     })
   }

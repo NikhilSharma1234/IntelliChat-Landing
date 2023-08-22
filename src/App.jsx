@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
 import {
   Routes,
   Route,
@@ -24,6 +24,7 @@ import SignUp from './pages/SignUp';
 import Payments from './pages/Payments'
 import ResetPassword from './pages/ResetPassword';
 import Header from './partials/Header';
+import Footer from './partials/Footer';
 import { UserProvider } from './UserContext';
 
 function App() {
@@ -118,6 +119,8 @@ function App() {
         }
         <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
+      {/*  Site footer */}
+      <Footer />
     </>
     </UserProvider>
   );

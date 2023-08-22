@@ -37,9 +37,6 @@ function Home({
       </main>
 
       <Banner />
-
-      {/*  Site footer */}
-      <Footer />
     </div>
   );
 }
