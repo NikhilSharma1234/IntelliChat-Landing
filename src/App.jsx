@@ -21,13 +21,16 @@ import {Auth} from 'aws-amplify';
 import Home from './pages/Home';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
+import Payments from './pages/Payments'
 import ResetPassword from './pages/ResetPassword';
 import Header from './partials/Header';
 import Footer from './partials/Footer';
+import { UserProvider } from './UserContext';
 
 function App() {
   const [render, setRender] = React.useState(false)
   const [isSignedIn, setIsSignedIn] = React.useState(false);
+  const [username, setUsername] = React.useState('');
   const location = useLocation();
 
   useEffect(() => {
@@ -35,10 +38,11 @@ function App() {
       try {
         const auth = await Auth.currentAuthenticatedUser();
         if (auth) {
-          setIsSignedIn(true)
+          setIsSignedIn(true);
+          setUsername(auth.username);
         }
         else {
-          setIsSignedIn(false)
+          setIsSignedIn(false);
         }
       }
       catch(err) {
@@ -71,6 +75,7 @@ function App() {
 
   if (render) {
   return (
+    <UserProvider>
     <>
       <Header
         setIsSignedIn={setIsSignedIn}
@@ -95,11 +100,29 @@ function App() {
             isSignedIn={isSignedIn}
           />
         } />
+        {username.length > 0 ? (<Route path="/payments" element={
+            <Payments
+              setIsSignedIn={setIsSignedIn}
+              isSignedIn={isSignedIn}
+              username={username}
+            />
+          } />
+        ) : (
+          <Route path="/payments" element={
+            <Payments
+              setIsSignedIn={setIsSignedIn}
+              isSignedIn={false}
+              username={username}
+            />
+          } />
+        )
+        }
         <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
       {/*  Site footer */}
       <Footer />
     </>
+    </UserProvider>
   );
   }
 }

@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import {Auth} from 'aws-amplify';
+import axios from "axios";
 
 import Header from '../partials/Header';
 import { Dialog, DialogContent, DialogTitle, Snackbar } from '@mui/material';
@@ -84,10 +85,14 @@ function SignUp(
       setSnackBarStatus(true);
      })
   }
-  function verifyCode() {
+
+  async function verifyCode() {
     if (!verificationCode) return false;
-    Auth.confirmSignUp(username, verificationCode).then((result) => {
+    await Auth.confirmSignUp(username, verificationCode).then(async (result) => {
       setSnackBarText('User verified! Happy Browsing!');
+      const params = new URLSearchParams();
+      params.append('username', username);
+      const resp = await axios.post("http://localhost:4242/create", params);
       setSnackBarStatus(true);
       setUserSuccess(false);
       signInUser();
@@ -103,6 +108,7 @@ function SignUp(
           return response;
         }
       });
+      
       setIsSignedIn(true);
     }).catch((err) => {
     })
@@ -134,7 +140,7 @@ function SignUp(
         </div>
         <div className="flex flex-wrap -mx-3 mt-6">
           <div className="w-full px-3">
-            <button onClick={verifyCode} id="submitVerify" type="submitVerify" className="btn text-white bg-purple-600 hover:bg-purple-700 w-full">Verify</button>
+            <button onClick={verifyCode} id="submitVerify" type="submitVerify" className="btn text-white bg-[#277EFF] hover:opacity-90 w-full">Verify</button>
           </div>
         </div>
       </DialogContent>
@@ -181,12 +187,12 @@ function SignUp(
               </div>
               <div className="flex flex-wrap -mx-3 mt-6">
                 <div className="w-full px-3">
-                  <button id="submit" type="submit" className="btn text-white bg-purple-600 hover:bg-purple-700 w-full">Sign up</button>
+                  <button id="submit" type="submit" className="btn text-white bg-[#277EFF] hover:opacity-90 w-full">Sign up</button>
                 </div>
               </div>
             </form>
             <div className="text-gray-400 text-center mt-6">
-              Already using IntelliChat? <a href="/signin" className="text-purple-600 hover:text-gray-200 transition duration-150 ease-in-out">Sign in</a>
+              Already using IntelliChat? <a href="/signin" className="text-[#277EFF] hover:text-gray-200 transition duration-150 ease-in-out">Sign in</a>
             </div>
           </div>
 

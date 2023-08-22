@@ -29,7 +29,7 @@ function FeaturesZigzag() {
               {/* Content */}
               <div className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6" data-aos="fade-right">
                 <div className="md:pr-4 lg:pr-12 xl:pr-16">
-                  <div className="font-architects-daughter text-xl text-purple-600 mb-2">More speed. Less distractions</div>
+                  <div className="font-architects-daughter text-xl text-[#277EFF] mb-2">More speed. Less distractions</div>
                   <h3 className="h3 mb-3">Extension UI</h3>
                   <p className="text-xl text-gray-400 mb-4">The engineers at IntelliChat have curated the product to have a simple, modern and fast user interface</p>
                   <ul className="text-lg text-gray-400 -mb-2">
@@ -65,7 +65,7 @@ function FeaturesZigzag() {
               {/* Content */}
               <div className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6" data-aos="fade-left">
                 <div className="md:pl-4 lg:pl-12 xl:pl-16">
-                  <div className="font-architects-daughter text-xl text-purple-600 mb-2">More learning. Less reading</div>
+                  <div className="font-architects-daughter text-xl text-[#277EFF] mb-2">More learning. Less reading</div>
                   <h3 className="h3 mb-3">Gain more from the webpage</h3>
                   <p className="text-xl text-gray-400 mb-4">Choose from one of the three options to either define, summarize or learn more about the highlighted text</p>
                   <ul className="text-lg text-gray-400 -mb-2">
@@ -101,7 +101,7 @@ function FeaturesZigzag() {
               {/* Content */}
               <div className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6" data-aos="fade-right">
                 <div className="md:pr-4 lg:pr-12 xl:pr-16">
-                  <div className="font-architects-daughter text-xl text-purple-600 mb-2">More human. Less robot</div>
+                  <div className="font-architects-daughter text-xl text-[#277EFF] mb-2">More human. Less robot</div>
                   <h3 className="h3 mb-3">Human-like interaction</h3>
                   <p className="text-xl text-gray-400 mb-4">IntelliChat's AI model responds to queries as a human would. This makes understanding and interpreting the text easier</p>
                   <ul className="text-lg text-gray-400 -mb-2">

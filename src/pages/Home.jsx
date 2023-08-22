@@ -26,7 +26,10 @@ function Home({
         </div>
 
         {/*  Page sections */}
-        <HeroHome />
+        <HeroHome 
+          setIsSignedIn={setIsSignedIn}
+          isSignedIn={isSignedIn}
+        />
         <FeaturesBlocks />
         <FeaturesZigZag />
         <Testimonials />

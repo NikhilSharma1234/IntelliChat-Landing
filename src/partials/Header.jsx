@@ -69,7 +69,7 @@ function Header({
             ? 
             <li>
               <button onClick={() => signOut()}
-                className="font-medium text-purple-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"
+                className="font-medium text-[#277EFF] hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"
               >
                 Sign Out
               </button>
@@ -79,13 +79,13 @@ function Header({
               <li>
                 <a
                   href="/signin"
-                  className="font-medium text-purple-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"
+                  className="font-medium text-[#277EFF] hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"
                 >
                   Sign in
                 </a>
               </li>
               <li>
-                <a href="/signup" className="btn-sm text-white bg-purple-600 hover:bg-purple-700 ml-3">
+                <a href="/signup" className="btn-sm text-white bg-[#277EFF] hover:opacity-90 ml-3">
                   Sign up
                 </a>
               </li>
