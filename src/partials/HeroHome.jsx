@@ -53,9 +53,14 @@ function HeroHome({
                   <Link to="/payments" className="btn text-white bg-[#277EFF] hover:opacity-90 w-full mb-4 sm:w-auto sm:mb-0" href="#0">View Plans</Link>
                 </div>
               )}
+              
               <div data-aos="fade-up" data-aos-delay="600">
                 <a className="btn text-white bg-gray-700 hover:bg-gray-800 w-full sm:w-auto sm:ml-4" href="#features">Learn more</a>
               </div>
+
+              <div data-aos="fade-up" data-aos-delay="800">
+                <Link to="/documentation" className="btn text-white bg-[#277EFF] hover:opacity-90 w-full sm:w-auto sm:ml-4">Documentation</Link>
+              </div>                           
             </div>
           </div>
 
