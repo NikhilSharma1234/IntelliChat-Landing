@@ -140,13 +140,13 @@ app.post('/plan', async (req, res) => {
   
   try {
     const user = await getUserByUsername(username);
-    console.log(user);
+
     if (!user || !user.session_id) {
       return res.status(200).json({ plan: 'free' });
     }
   
     const session = await stripe.checkout.sessions.retrieve(user.session_id);
-    console.log(session);
+
     if (session.subscription) {
       res.status(200).json({ plan: 'premium' });
     } else {
