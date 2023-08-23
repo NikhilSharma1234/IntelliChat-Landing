@@ -52,7 +52,7 @@ function SignUp(
       navigate("/");
       return
     }
-  }, [auth]);
+  }, [auth, isSignedIn]);
 
 
   const validateEmail = (email) => {
@@ -107,7 +107,6 @@ function SignUp(
           return response;
         }
       });
-      
       setIsSignedIn(true);
     }).catch((err) => {
     })
