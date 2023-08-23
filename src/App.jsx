@@ -6,6 +6,8 @@ import {
 } from 'react-router-dom';
 import 'aos/dist/aos.css';
 import './css/style.css';
+import axios from "axios";
+
 
 import AOS from 'aos';
 import {Amplify} from 'aws-amplify';
@@ -86,6 +88,7 @@ function App() {
           <Home
             setIsSignedIn={setIsSignedIn}
             isSignedIn={isSignedIn}
+            username={username}
           />
         } />
         <Route path="/signin" element={
