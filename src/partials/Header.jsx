@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Logo from '../images/white_transparent.png'
 import {Auth} from 'aws-amplify';
 import { useNavigate } from 'react-router-dom';
@@ -56,9 +57,9 @@ function Header({
         {/* Site branding */}
         <div className="shrink-0 mr-4">
           {/* Logo */}
-          <a href="/" className="block" aria-label="IntelliChat">
+          <Link to="/" className="block" aria-label="IntelliChat">
             <img src={Logo} width={144} alt="IntelliChat Logo"/>
-          </a>
+          </Link>
         </div>
 
         {/* Desktop navigation */}
@@ -77,17 +78,17 @@ function Header({
             :
             <>
               <li>
-                <a
-                  href="/signin"
+                <Link
+                  to="/signin"
                   className="font-medium text-[#277EFF] hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"
                 >
                   Sign in
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/signup" className="btn-sm text-white bg-[#277EFF] hover:opacity-90 ml-3">
+                <Link to="/signup" className="btn-sm text-white bg-[#277EFF] hover:opacity-90 ml-3">
                   Sign up
-                </a>
+                </Link>
               </li>
             </>
             }

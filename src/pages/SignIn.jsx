@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
+import { useUserContext } from './../UserContext';
 import Header from '../partials/Header';
 import PageIllustration from '../partials/PageIllustration';
 import Banner from '../partials/Banner';
@@ -15,6 +15,7 @@ function SignIn({
   const [username, setUsername] = React.useState('');
   const [snackBarStatus, setSnackBarStatus] = React.useState(false);
   const [snackBarText, setSnackBarText] = React.useState('');
+  const { userPlan, setUserPlan } = useUserContext();
   const navigate = useNavigate();
 
   function signIn(event) {

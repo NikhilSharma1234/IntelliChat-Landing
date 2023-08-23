@@ -7,6 +7,7 @@ import {
 import 'aos/dist/aos.css';
 import './css/style.css';
 
+
 import AOS from 'aos';
 import {Amplify} from 'aws-amplify';
 Amplify.configure({
@@ -21,7 +22,8 @@ import {Auth} from 'aws-amplify';
 import Home from './pages/Home';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
-import Payments from './pages/Payments'
+import Payments from './pages/Payments';
+import Documentation from './pages/Documentation';
 import ResetPassword from './pages/ResetPassword';
 import Header from './partials/Header';
 import Footer from './partials/Footer';
@@ -86,6 +88,7 @@ function App() {
           <Home
             setIsSignedIn={setIsSignedIn}
             isSignedIn={isSignedIn}
+            username={username}
           />
         } />
         <Route path="/signin" element={
@@ -117,6 +120,7 @@ function App() {
           } />
         )
         }
+        <Route path="/documentation" element={<Documentation />} />
         <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
       {/*  Site footer */}

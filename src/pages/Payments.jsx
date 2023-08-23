@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Auth } from 'aws-amplify';
 import { Snackbar } from '@mui/material';
 import axios from "axios";
@@ -9,9 +9,11 @@ function Payments({
   isSignedIn,
   username,
 }) {
+  const location = useLocation();
   const [snackBarStatus, setSnackBarStatus] = React.useState(false);
   const [cancelSub, setCancelSub] = React.useState(false);
   const [snackBarText, setSnackBarText] = React.useState('');
+  const [inCheckout, setInCheckout] = React.useState(false);
   const navigate = useNavigate();
   const { userPlan, setUserPlan } = useUserContext();
 
@@ -19,23 +21,41 @@ function Payments({
     setCancelSub(!cancelSub);
   };
 
-  const handleSubmit = async (route) => {
+  const handleSubmit = async (route, opt=undefined) => {
+    opt.preventDefault();
     const params = new URLSearchParams();
     params.append('username', username);
-    const resp = await axios.post(`http://localhost:4242${route}`, params);
     
-    await updatePlan();
-    return resp;
+    try {
+      const resp_route = await axios.post(`http://localhost:4242${route}`, params);
+  
+      if (route === '/checkout') {
+        window.location.href = resp_route.data.stripe_url;
+      } else if (route === '/cancel') {
+        window.location.reload(false);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
-
-  const updatePlan = async () => {
-    const params = new URLSearchParams();
-    params.append('username', username);
-    const resp = await axios.post(`http://localhost:4242/plan`, params);
-    console.log(resp);
-    setUserPlan(resp);
-  };
-
+  
+  useEffect(() => {
+    if (isSignedIn){
+      if (userPlan === 'free') {
+        const params = new URLSearchParams();
+        params.append('username', username);
+        axios.post(`http://localhost:4242/plan`, params)
+        .then(response => {
+          console.log(response);
+          if (response.data.plan == 'premium')
+          setUserPlan('premium'); 
+        })
+        .catch(error => {
+          console.error('Error updating plan:', error);
+        });
+      }
+    }
+   }, [location]);
 
   const Plans = () => (
     <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -44,7 +64,7 @@ function Payments({
             {/* Page header */}
             <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
             {isSignedIn ? (
-                <h1 className="h1">Welcome to the {userPlan === 'free' ? 'Free Plan' : 'Premium Plan'}</h1>
+                <h1 className="h1" data-aos="fade-up" data-aos-delay="400">Welcome to the {userPlan === 'free' ? 'Free Plan' : 'Premium Plan'}</h1>
             ) : (
                 <div className="">
                     <h1 className="h1 p-20">Sign in to view payment plans</h1>
@@ -56,7 +76,7 @@ function Payments({
             </div>
 
             {/* Payment options */}
-            <div className="mx-auto flex justify-center space-x-32">
+            <div className="mx-auto flex justify-center space-x-32" data-aos="fade-up" data-aos-delay="600">
                 {/* Display plan details */}
                 {isSignedIn && userPlan === 'free' && (
                     <>
@@ -68,8 +88,8 @@ function Payments({
                                 <div>• No customer support. 😔</div>
                                 <div>• Throttled heavily. 😭</div>
                             </div>
-                            <form onSubmit={() => handleSubmit('/checkout')}>
-                                <button type="submit">
+                            <form onSubmit={(e) => handleSubmit('/checkout', e)}>
+                                <button type="submit" className='transform transition-transform hover:scale-110'>
                                     <br />
                                     <br />
                                     <span className="p-2 bg-gray-300 rounded-lg text-gray-700 font-bold">Upgrade</span>
@@ -77,7 +97,7 @@ function Payments({
                             </form>
                         </div>
                         <div className="w-1/2 p-8 rounded-lg bg-[#277EFF] text-white flex-1">
-                            <h2 className="text-lg font-semibold">Other Plans: Premium</h2>
+                            <h2 className="text-lg font-semibold">Other Plans: Premium</h2> 
                             <p>Enjoy unlimited messaging options, higher rates, faster message responses, and no throttling.</p>
                             <div className="mt-4 text-white">
                                 <div>• Unlimited messages per day. 💯</div>
@@ -85,8 +105,8 @@ function Payments({
                                 <div>• Priority customer support. 🗿</div>
                                 <div>• No throttling or downtime! 🚀</div>
                             </div>
-                            <form onSubmit={() => handleSubmit('/checkout')}>
-                                <button type="submit">
+                            <form onSubmit={(e) => handleSubmit('/checkout', e)}>
+                                <button type="submit" className='transform transition-transform hover:scale-110'>
                                         <br />
                                         <span className="p-2 bg-gray-200 text-[#277EFF] rounded-lg font-bold">Join for $5/month</span>
                                 </button>
@@ -109,15 +129,19 @@ function Payments({
                         </div>
                     </div>
                     <div className="text-center space-x-6">
-                        <form onSubmit={() => handleSubmit('/cancel')}>
+                        <form onSubmit={(e) => handleSubmit('/cancel', e)}>
+                        {cancelSub ? (
+                            <button type="button" onClick={handleCancel} className="p-2 bg-gray-300 rounded-lg text-gray-600 font-bold">Back </button>
+                        ) : (
                             <button type="button" onClick={handleCancel} className="p-2 bg-gray-300 rounded-lg text-gray-600 font-bold">Cancel Subscription </button>
-                            {cancelSub && (
-                                <>
-                                    <button type="submit" className="p-2 bg-gray-300 rounded-lg text-gray-600 font-bold ml-6">
-                                        Actually? 😭
-                                    </button>
-                                </>
-                            )}
+                        )}
+                        {cancelSub && (
+                            <>
+                                <button type="submit" className="p-2 bg-gray-300 rounded-lg text-gray-600 font-bold ml-6">
+                                    Actually? 😭
+                                </button>
+                            </>
+                        )}
                         </form>
                     </div>
                 </div>
@@ -129,15 +153,21 @@ function Payments({
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
 
-    
-    
-
     if (isSignedIn) {
-      if (query.get("success") && userPlan == 'premium') {
-        setSnackBarText("Subscription complete! You will receive an email confirmation.");
-        setSnackBarStatus(true);
+      if (query.get("success")) {
+          axios.post(`http://localhost:4242/plan`, { username })
+            .then(response => {
+              if (response.data.plan == 'premium') {
+                setUserPlan('premium');
+                setSnackBarText("Subscription complete!");
+                setSnackBarStatus(true);
+              }
+            })
+            .catch(error => {
+              console.error('Error updating plan:', error);
+            });
       }
-      
+  
       if (query.get("canceled")) {
         setSnackBarText("Order canceled -- continue to checkout when you're ready.");
         setSnackBarStatus(true);
