@@ -31,6 +31,8 @@ function Payments({
   
       if (route === '/checkout') {
         window.location.href = resp_route.data.stripe_url;
+      } else if (route === '/cancel') {
+        window.location.reload(false);
       }
     } catch (error) {
       console.error('Error:', error);
@@ -62,7 +64,7 @@ function Payments({
             {/* Page header */}
             <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
             {isSignedIn ? (
-                <h1 className="h1">Welcome to the {userPlan === 'free' ? 'Free Plan' : 'Premium Plan'}</h1>
+                <h1 className="h1" data-aos="fade-up" data-aos-delay="400">Welcome to the {userPlan === 'free' ? 'Free Plan' : 'Premium Plan'}</h1>
             ) : (
                 <div className="">
                     <h1 className="h1 p-20">Sign in to view payment plans</h1>
@@ -74,7 +76,7 @@ function Payments({
             </div>
 
             {/* Payment options */}
-            <div className="mx-auto flex justify-center space-x-32">
+            <div className="mx-auto flex justify-center space-x-32" data-aos="fade-up" data-aos-delay="600">
                 {/* Display plan details */}
                 {isSignedIn && userPlan === 'free' && (
                     <>
@@ -87,7 +89,7 @@ function Payments({
                                 <div>• Throttled heavily. 😭</div>
                             </div>
                             <form onSubmit={(e) => handleSubmit('/checkout', e)}>
-                                <button type="submit">
+                                <button type="submit" className='transform transition-transform hover:scale-110'>
                                     <br />
                                     <br />
                                     <span className="p-2 bg-gray-300 rounded-lg text-gray-700 font-bold">Upgrade</span>
@@ -95,7 +97,7 @@ function Payments({
                             </form>
                         </div>
                         <div className="w-1/2 p-8 rounded-lg bg-[#277EFF] text-white flex-1">
-                            <h2 className="text-lg font-semibold">Other Plans: Premium</h2>
+                            <h2 className="text-lg font-semibold">Other Plans: Premium</h2> 
                             <p>Enjoy unlimited messaging options, higher rates, faster message responses, and no throttling.</p>
                             <div className="mt-4 text-white">
                                 <div>• Unlimited messages per day. 💯</div>
@@ -104,7 +106,7 @@ function Payments({
                                 <div>• No throttling or downtime! 🚀</div>
                             </div>
                             <form onSubmit={(e) => handleSubmit('/checkout', e)}>
-                                <button type="submit">
+                                <button type="submit" className='transform transition-transform hover:scale-110'>
                                         <br />
                                         <span className="p-2 bg-gray-200 text-[#277EFF] rounded-lg font-bold">Join for $5/month</span>
                                 </button>
