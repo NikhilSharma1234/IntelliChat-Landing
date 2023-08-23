@@ -1,7 +1,7 @@
 {
   "name": "open-pro-react",
   "version": "0.1.0",
-  "proxy": "http://localhost:4242",
+  "proxy": "http://127.0.0.1:4242",
   "scripts": {
     "dev": "vite --mode development",
     "build": "vite build",

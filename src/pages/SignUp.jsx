@@ -91,7 +91,7 @@ function SignUp(
       setSnackBarText('User verified! Happy Browsing!');
       const params = new URLSearchParams();
       params.append('username', username);
-      const resp = await axios.post("http://localhost:4242/create", params);
+      const resp = await axios.post("http://127.0.0.1:4242/create", params);
       setSnackBarStatus(true);
       setUserSuccess(false);
       signInUser();

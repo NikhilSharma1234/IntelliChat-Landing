@@ -22,7 +22,7 @@ function Home({
       if (userPlan === 'free') {
         const params = new URLSearchParams();
         params.append('username', username);
-        axios.post(`http://localhost:4242/plan`, params)
+        axios.post(`http://127.0.0.1:4242/plan`, params)
         .then(response => {
           if (response.data.plan == 'premium')
           setUserPlan('premium'); 

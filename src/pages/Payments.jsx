@@ -27,7 +27,7 @@ function Payments({
     params.append('username', username);
     
     try {
-      const resp_route = await axios.post(`http://localhost:4242${route}`, params);
+      const resp_route = await axios.post(`http://127.0.0.1:4242${route}`, params);
   
       if (route === '/checkout') {
         window.location.href = resp_route.data.stripe_url;
@@ -44,7 +44,7 @@ function Payments({
       if (userPlan === 'free') {
         const params = new URLSearchParams();
         params.append('username', username);
-        axios.post(`http://localhost:4242/plan`, params)
+        axios.post(`http://127.0.0.1:4242/plan`, params)
         .then(response => {
           console.log(response);
           if (response.data.plan == 'premium')
@@ -155,7 +155,7 @@ function Payments({
 
     if (isSignedIn) {
       if (query.get("success")) {
-          axios.post(`http://localhost:4242/plan`, { username })
+          axios.post(`http://127.0.0.1:4242/plan`, { username })
             .then(response => {
               if (response.data.plan == 'premium') {
                 setUserPlan('premium');

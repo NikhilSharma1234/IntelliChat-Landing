@@ -1,4 +1,4 @@
-require('dotenv').config({path: './../.env'});
+require('dotenv').config({path: __dirname+'./../.env'});
 const stripe = require('stripe')(process.env.VITE_STRIPE_KEY);
 const bodyParser = require('body-parser');
 const express = require('express');
@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-const DOMAIN = 'http://localhost:5173/payments'; // frontend here
+const DOMAIN = 'http://127.0.0.1:5173/payments'; // frontend here
 
 async function updateSessionID(username, session_id) {
   const command = new UpdateCommand({
