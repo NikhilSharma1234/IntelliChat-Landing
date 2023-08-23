@@ -23,18 +23,17 @@ app.use(bodyParser.urlencoded({
 
 const DOMAIN = 'http://localhost:5173/payments'; // frontend here
 
-async function updateUserSubscription(username, subscriptionId) {
+async function updateSessionID(username, session_id) {
   const command = new UpdateCommand({
     TableName: 'Customers',
     Key: {
       "username": username
     },
-    UpdateExpression: 'SET subscriptionId = :subscriptionId',
+    UpdateExpression: "set session_id = :session_id",
     ExpressionAttributeValues: {
-      ':subscriptionId': { S: subscriptionId },
+      ':session_id': session_id,
     },
   });
-
   await docClient.send(command);
 }
 
@@ -51,7 +50,7 @@ async function getUserByUsername(username) {
   if (!resp.Item) {
     return null
   } else {
-    return username
+    return resp.Item;
   }
 }
 
@@ -69,7 +68,7 @@ app.post('/create', async (req, res) => {
 
   const newUser = {
     username: username,
-    subscriptionId: null,
+    session_id: null,
   };
 
   const command = new PutCommand({
@@ -87,14 +86,14 @@ app.post('/create', async (req, res) => {
 });
 
 app.post('/checkout', async (req, res) => {
-  // const { username } = req.body;
-  // console.log(username);
+  const { username } = req.body;
 
-  // const user = await getUserByUsername(username);
+  const user = await getUserByUsername(username);
 
-  // if (!user) {
-  //   return res.status(404).json({ message: 'User not found.' });
-  // }
+  if (!user) {
+    return res.status(404).json({ message: 'User not found.' });
+  }
+  
   
   const session = await stripe.checkout.sessions.create({
     line_items: [
@@ -104,12 +103,13 @@ app.post('/checkout', async (req, res) => {
       },
     ],
     mode: 'subscription',
+    client_reference_id: username,
     success_url: `${DOMAIN}?success=true`,
     cancel_url: `${DOMAIN}?canceled=true`,
   });
-
-  // await updateUserSubscription(username, session.subscription);
-  res.redirect(303, session.url);
+  
+  await updateSessionID(username, session.id);
+  res.send(JSON.stringify({stripe_url:session.url}));
 });
 
 app.post('/cancel', async (req, res) => {
@@ -117,16 +117,16 @@ app.post('/cancel', async (req, res) => {
 
   try {
     const user = await getUserByUsername(username);
-
-    if (!user || !user.subscriptionId) {
+    if (!user || !user.session_id) {
       return res.status(404).json({ message: 'User not found or subscription not found.' });
     }
 
-    await stripe.subscriptions.update(user.subscriptionId, {
+    const session = await stripe.checkout.sessions.retrieve(user.session_id);
+    await stripe.subscriptions.update(session.subscription, {
       cancel_at_period_end: true,
     });
 
-    await updateUserSubscription(username, null);
+    await updateSessionID(username, null);
 
     res.json({ message: 'Subscription canceled successfully.' });
   } catch (error) {
@@ -137,32 +137,24 @@ app.post('/cancel', async (req, res) => {
 
 app.post('/plan', async (req, res) => {
   const { username } = req.body;
-
+  
   try {
     const user = await getUserByUsername(username);
-
-    if (!user || !user.subscriptionId) {
-      return res.status(404).json({ plan: 'free' });
+    console.log(user);
+    if (!user || !user.session_id) {
+      return res.status(200).json({ plan: 'free' });
     }
-
-    const command = new GetCommand({
-      TableName: 'Customers',
-      Key: {
-        "username": username
-      }
-    });
   
-    const resp = await docClient.send(command);
-  
-    if (!resp.Item) {
-      return null
-    } else if (resp.Item.subscriptionId != null) {
+    const session = await stripe.checkout.sessions.retrieve(user.session_id);
+    console.log(session);
+    if (session.subscription) {
       res.status(200).json({ plan: 'premium' });
     } else {
       res.status(200).json({ plan: 'free' });
     }
-  } catch {
-    res.status(500).json({ plan: 'free' });
+  } catch (e){
+    res.status(200).json({ plan: 'free' });
   }
 });
+
 app.listen(4242, () => console.log('Running on port 4242'));
