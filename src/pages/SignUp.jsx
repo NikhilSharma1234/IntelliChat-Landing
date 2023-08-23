@@ -32,7 +32,6 @@ function SignUp(
         setSnackBarStatus(true);
         setTimeout(() => {
           chrome.runtime.sendMessage(process.env.VITE_CHROME_EXTENSION_ID, {jwt: result.signInUserSession.idToken.jwtToken}, response => {
-            console.log(response)
             if (response) {
               
             }
@@ -45,12 +44,12 @@ function SignUp(
         setSnackBarStatus(true);
       })
     }
-    console.log(isSignedIn, auth)
     if (isSignedIn && auth) {
       sendMessageToExtension();
+      navigate("/")
     }
     else if (isSignedIn) {
-      //navigate("/");
+      navigate("/");
       return
     }
   }, [auth]);
