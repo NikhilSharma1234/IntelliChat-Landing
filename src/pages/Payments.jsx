@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Auth } from 'aws-amplify';
 import { Snackbar } from '@mui/material';
 import axios from "axios";
@@ -9,9 +9,11 @@ function Payments({
   isSignedIn,
   username,
 }) {
+  const location = useLocation();
   const [snackBarStatus, setSnackBarStatus] = React.useState(false);
   const [cancelSub, setCancelSub] = React.useState(false);
   const [snackBarText, setSnackBarText] = React.useState('');
+  const [inCheckout, setInCheckout] = React.useState(false);
   const navigate = useNavigate();
   const { userPlan, setUserPlan } = useUserContext();
 
@@ -23,14 +25,35 @@ function Payments({
     opt.preventDefault();
     const params = new URLSearchParams();
     params.append('username', username);
-    const resp_route = await axios.post(`http://localhost:4242${route}`, params);
-    const resp_plan = await axios.post(`http://localhost:4242/plan`, params);
     
-    setUserPlan(resp_plan); // wrong atm, but should be resp_plan.data.subscriptionId
-    
-    return resp_route;
+    try {
+      const resp_route = await axios.post(`http://localhost:4242${route}`, params);
+  
+      if (route === '/checkout') {
+        window.location.href = resp_route.data.stripe_url;
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
-
+  
+  useEffect(() => {
+    if (isSignedIn){
+      if (userPlan === 'free') {
+        const params = new URLSearchParams();
+        params.append('username', username);
+        axios.post(`http://localhost:4242/plan`, params)
+        .then(response => {
+          console.log(response);
+          if (response.data.plan == 'premium')
+          setUserPlan('premium'); 
+        })
+        .catch(error => {
+          console.error('Error updating plan:', error);
+        });
+      }
+    }
+   }, [location]);
 
   const Plans = () => (
     <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -104,15 +127,19 @@ function Payments({
                         </div>
                     </div>
                     <div className="text-center space-x-6">
-                        <form onSubmit={() => handleSubmit('/cancel')}>
+                        <form onSubmit={(e) => handleSubmit('/cancel', e)}>
+                        {cancelSub ? (
+                            <button type="button" onClick={handleCancel} className="p-2 bg-gray-300 rounded-lg text-gray-600 font-bold">Back </button>
+                        ) : (
                             <button type="button" onClick={handleCancel} className="p-2 bg-gray-300 rounded-lg text-gray-600 font-bold">Cancel Subscription </button>
-                            {cancelSub && (
-                                <>
-                                    <button type="submit" className="p-2 bg-gray-300 rounded-lg text-gray-600 font-bold ml-6">
-                                        Actually? 😭
-                                    </button>
-                                </>
-                            )}
+                        )}
+                        {cancelSub && (
+                            <>
+                                <button type="submit" className="p-2 bg-gray-300 rounded-lg text-gray-600 font-bold ml-6">
+                                    Actually? 😭
+                                </button>
+                            </>
+                        )}
                         </form>
                     </div>
                 </div>
@@ -124,15 +151,21 @@ function Payments({
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
 
-    
-    
-
     if (isSignedIn) {
-      if (query.get("success") && userPlan == 'premium') {
-        setSnackBarText("Subscription complete! You will receive an email confirmation.");
-        setSnackBarStatus(true);
+      if (query.get("success")) {
+          axios.post(`http://localhost:4242/plan`, { username })
+            .then(response => {
+              if (response.data.plan == 'premium') {
+                setUserPlan('premium');
+                setSnackBarText("Subscription complete!");
+                setSnackBarStatus(true);
+              }
+            })
+            .catch(error => {
+              console.error('Error updating plan:', error);
+            });
       }
-      
+  
       if (query.get("canceled")) {
         setSnackBarText("Order canceled -- continue to checkout when you're ready.");
         setSnackBarStatus(true);
