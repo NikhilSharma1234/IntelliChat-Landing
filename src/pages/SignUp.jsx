@@ -36,7 +36,6 @@ function SignUp(
               
             }
           });
-          setIsSignedIn(true)
           navigate("/")
         }, 2000);
       }).catch((err) => {
@@ -100,8 +99,8 @@ function SignUp(
       setSnackBarStatus(true);
     })
   }
-  function signInUser() {
-    Auth.signIn(username, password).then((result) => {
+  async function signInUser() {
+    await Auth.signIn(username, password).then((result) => {
       chrome.runtime.sendMessage(process.env.VITE_CHROME_EXTENSION_ID, {jwt: result.signInUserSession.idToken.jwtToken}, response => {
         if (response) {
           return response;

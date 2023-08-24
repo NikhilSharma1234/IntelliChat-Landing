@@ -45,9 +45,9 @@ function Header({
           return response;
         }
       });
+      setIsSignedIn(false);
+      navigate("/");
     });
-    setIsSignedIn(false);
-    navigate("/");
   }
 
   return (

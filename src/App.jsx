@@ -37,21 +37,15 @@ function App() {
 
   useEffect(() => {
     async function checkAuth() {
-      try {
-        const auth = await Auth.currentAuthenticatedUser();
-        if (auth) {
-          setIsSignedIn(true);
-          setUsername(auth.username);
-        }
-        else {
-          setIsSignedIn(false);
-        }
-      }
-      catch(err) {
+      const auth = await Auth.currentAuthenticatedUser();
+      console.log(auth)
+      if (auth) {
+        setIsSignedIn(true);
+        setUsername(auth.username);
       }
     }
-    checkAuth()
-  }, [])
+    checkAuth();
+  }, [isSignedIn])
 
   useEffect(() => {
     if (isSignedIn) {
@@ -103,23 +97,13 @@ function App() {
             isSignedIn={isSignedIn}
           />
         } />
-        {username.length > 0 ? (<Route path="/payments" element={
+        <Route path="/payments" element={
             <Payments
               setIsSignedIn={setIsSignedIn}
               isSignedIn={isSignedIn}
               username={username}
             />
           } />
-        ) : (
-          <Route path="/payments" element={
-            <Payments
-              setIsSignedIn={setIsSignedIn}
-              isSignedIn={false}
-              username={username}
-            />
-          } />
-        )
-        }
         <Route path="/documentation" element={<Documentation />} />
         <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>

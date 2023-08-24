@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import Header from '../partials/Header';
 import PageIllustration from '../partials/PageIllustration';
 import HeroHome from '../partials/HeroHome';
 import FeaturesBlocks from '../partials/FeaturesBlocks';
@@ -36,7 +35,6 @@ function Home({
 
   return (
     <div className="flex flex-col min-h-screen overflow-hidden">
-      {/*  Site header */}
 
       {/*  Page content */}
       <main className="grow">
